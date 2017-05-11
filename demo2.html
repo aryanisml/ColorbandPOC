@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="http://demos.telerik.com/kendo-ui/grid/angular">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.607/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.607/styles/kendo.bootstrap.min.css" />
+
+    <script src="//kendo.cdn.telerik.com/2016.2.607/js/jquery.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.2.607/js/angular.min.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.2.607/js/kendo.all.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+  </head>
+  <style>
+    body{ 
+    font: 13px sans-serif;
+    }
+    .one{
+		background: red !important;
+    }
+    .two{
+		background: yellow !important;        
+    }
+    .three{
+        background: green !important;        
+    }
+	.four{
+	    background: orange !important;        
+	}
+	.five{
+	    background: blue !important;        
+	}
+    
+</style>
+  <body>
+    <div id="myTemplate" style="display: none">
+      <div>
+		 <div  class="col-xs-12" style="border:solid; background-color:purple; width:50px;">
+				<div ng-repeat="n in dataItem.StudyTrailId" style="margin-left:-16px;">
+					<div  ng-class="{'one':$index===0 , 'two' :$index===1, 'three' :$index===2 ,'four':$index===3,'five':$index===4}" 
+                    style="float:left!important; width:07.3px;"> &nbsp;
+					</div>
+				</div>
+		</div>
+      </div>
+    </div>
+	<div id="myTemplate2" style="display: none">
+	<input kendo-date-picker k-format="'dd MMM yyyy'" name="lastSSV" style="width:30%" ng-model="dataItem.SSVDate" ng-if="dataItem.SSVActual=='N' "  k-on-change="changesSSVDate(dataItem.SSVDate)" /> 
+	 <label ng-if="dataItem.SSVActual=='Y'">{{dataItem.SSVDate}}</label> 
+	</div>
+	
+	
+    <div id="example" ng-app="KendoDemos">
+      <div ng-controller="MyCtrl">
+        <kendo-grid options="mainGridOptions">
+        </kendo-grid>
+      </div>
+    </div>
+
+    <script>
+      angular.module("KendoDemos", [ "kendo.directives" ])
+        .controller("MyCtrl", function($scope){
+        console.log( angular.element("#myTemplate").html());
+		console.log( angular.element("#myTemplate2").html());
+		
+				
+	 $scope.Studies = [
+			 {
+			  StudyId:1,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ABC',
+			  SSVDate:'10 May 2017',
+			  SSVActual:'Y'
+			  },
+			  
+			  {
+			  StudyId:2,
+			  StudyTrailId:["1","2"],
+			  StudyName:'BEX',
+			  SSVDate:'12 May 2017'
+			   ,SSVActual:'Y'
+			  },
+			  {
+			  StudyId:3,
+			  StudyTrailId:["1"],
+			  StudyName:'CDE',
+			  SSVDate:'15 May 2017'
+			  ,SSVActual:'Y'
+			  },
+			  {
+			  StudyId:4,
+			  StudyTrailId:["1","2","3","4"],
+			  StudyName:'DERR',
+			  SSVDate:'18 May 2017'
+			  ,SSVActual:'Y'
+			  },
+			  {
+			  StudyId:5,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ERRR',
+			  SSVDate:'18 May 2017'
+			  ,SSVActual:'N'
+			  },
+			  {
+			  StudyId:6,
+			  StudyTrailId:["1","2"],
+			  StudyName:'FRRR',
+			  SSVDate:'20 May 2017'
+			  ,SSVActual:'N'
+			  },
+				{
+			  StudyId:7,
+			  StudyTrailId:["1","2","3","4","5"],
+			  StudyName:'FRRR',
+			  SSVDate:'22 May 2017'
+			  ,SSVActual:'N'
+			  }
+
+		];
+	
+	
+	$scope.changesSSVDate=function(dataItem){
+	  console.log(dataItem);
+	  
+	  
+	}
+	
+	
+    $scope.dataSource = new kendo.data.DataSource({
+        pageSize: 20,
+      //  data: products,
+	  data:$scope.Studies,
+        autoSync: true,
+        schema: {
+          model: {
+			id:"StudyId",
+            fields:{
+			StudyId: { editable: false, nullable: true }, 
+			//StudyTrailId: { nullable: true }, 
+			StudyName :{ nullable: true },
+			}			
+			
+          }
+        }
+      });
+		
+        $scope.mainGridOptions = {
+          dataSource: $scope.dataSource,
+          columns: [ 
+					{field:"StudyId", title:"StudyId", width:"170px"},		
+					{field:"StudyName", title:"StudyName" ,	width: "170px" },
+					{field:"SSVDate", title:"SSVDate" ,	template:angular.element("#myTemplate2").html() ,width: "29%"},
+					{field:"filters", title:"filters" ,	template:angular.element("#myTemplate").html()}
+			]
+		  , sortable: true
+        };
+      })
+    </script>
+
+
+  </body>
+</html>
