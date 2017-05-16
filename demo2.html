@@ -9,7 +9,10 @@
 
     <script src="//kendo.cdn.telerik.com/2016.2.607/js/jquery.min.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.2.607/js/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
     <script src="//kendo.cdn.telerik.com/2016.2.607/js/kendo.all.min.js"></script>
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
   </head>
@@ -32,6 +35,7 @@
 	.five{
 	    background: blue !important;        
 	}
+	.top-buffer { margin-top:20px; }
     
 </style>
   <body>
@@ -47,21 +51,60 @@
       </div>
     </div>
 	<div id="myTemplate2" style="display: none">
-	<input kendo-date-picker k-format="'dd MMM yyyy'" name="lastSSV" style="width:30%" ng-model="dataItem.SSVDate" ng-if="dataItem.SSVActual=='N' "  k-on-change="changesSSVDate(dataItem.SSVDate)" /> 
+	<input kendo-date-picker k-format="'dd MMM yyyy'" name="siDate" style="width:30%" ng-model="dataItem.SIDate" ng-if="dataItem.SIActual=='N' "  k-on-change="changesSIDate(dataItem)" /> 
+	 <label ng-if="dataItem.SIActual=='Y'">{{dataItem.SIDate}}</label> 
+	</div>
+	
+	<div id="myTemplate3" style="display: none">
+	<input kendo-date-picker k-format="'dd MMM yyyy'" name="ssvDate" style="width:30%" ng-model="dataItem.SSVDate" ng-if="dataItem.SSVActual=='N' "  k-on-change="changesSSVDate(dataItem)" /> 
 	 <label ng-if="dataItem.SSVActual=='Y'">{{dataItem.SSVDate}}</label> 
 	</div>
 	
 	
+	
+	<div id="myTemplate4" style="display: none">
+		{{dataItem.SSU}}
+	</div>
+	
+	
+	
     <div id="example" ng-app="KendoDemos">
       <div ng-controller="MyCtrl">
+	  <div class="container">
+		<div class="row top-buffer">
+		 <div class="col-md-1">
+		    Site # 
+		 </div>
+		 <div class="col-md-2">
+		    <input type="text" ng-model="sites" />
+		 </div>
+		 <div class="col-md-2">
+			<kendo-button class="k-primary" ng-click="AddRows()">Update Tables</kendo-button>  
+		 </div>
+		</div>
+		<div class="row top-buffer">
+		<div class="col-md-12">
         <kendo-grid options="mainGridOptions">
         </kendo-grid>
+		</div>
+		
+		</div>
+	  </div>
+	  
+	     
       </div>
     </div>
 
     <script>
-      angular.module("KendoDemos", [ "kendo.directives" ])
-        .controller("MyCtrl", function($scope){
+      angular.module("KendoDemos", [ "kendo.directives","angularMoment" ])
+			  .filter("mySSUFilter", function() { // register new filter
+		 return function(ssvDate, siDate) { // filter arguments 
+				console.log(ssvDate); 
+				console.log(siDate);
+		return  moment(siDate).diff((moment(ssvDate)), 'days'); // implementation 
+		 }; 
+		})   
+        .controller("MyCtrl", function($scope,moment){
         console.log( angular.element("#myTemplate").html());
 		console.log( angular.element("#myTemplate2").html());
 		
@@ -71,60 +114,141 @@
 			  StudyId:1,
 			  StudyTrailId:["1","2","3"],
 			  StudyName:'ABC',
-			  SSVDate:'10 May 2017',
-			  SSVActual:'Y'
+			  SIDate:'10 May 2017',
+			  SIActual:'Y',
+			  SSVDate :'01 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'39'
 			  },
 			  
 			  {
 			  StudyId:2,
 			  StudyTrailId:["1","2"],
 			  StudyName:'BEX',
-			  SSVDate:'12 May 2017'
-			   ,SSVActual:'Y'
+			  SIDate:'12 May 2017'
+			   ,SIActual:'Y',
+			  SSVDate :'10 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'32'
 			  },
 			  {
 			  StudyId:3,
 			  StudyTrailId:["1"],
 			  StudyName:'CDE',
-			  SSVDate:'15 May 2017'
-			  ,SSVActual:'Y'
+			  SIDate:'15 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'09 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36'
 			  },
 			  {
 			  StudyId:4,
 			  StudyTrailId:["1","2","3","4"],
 			  StudyName:'DERR',
-			  SSVDate:'18 May 2017'
-			  ,SSVActual:'Y'
+			  SIDate:'18 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'12 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36'
 			  },
 			  {
 			  StudyId:5,
 			  StudyTrailId:["1","2","3"],
 			  StudyName:'ERRR',
-			  SSVDate:'18 May 2017'
-			  ,SSVActual:'N'
+			  SIDate:'18 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'15 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'33'
 			  },
 			  {
 			  StudyId:6,
 			  StudyTrailId:["1","2"],
 			  StudyName:'FRRR',
-			  SSVDate:'20 May 2017'
-			  ,SSVActual:'N'
+			  SIDate:'20 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'20 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30'
 			  },
 				{
 			  StudyId:7,
 			  StudyTrailId:["1","2","3","4","5"],
 			  StudyName:'FRRR',
-			  SSVDate:'22 May 2017'
-			  ,SSVActual:'N'
+			  SIDate:'22 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'22 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30'
 			  }
 
 		];
 	
 	
+	$scope.AddRows=function(){
+	//Add new rows in exisiting grid 
+		$scope.dataSource.fetch();
+		var db= $scope.dataSource.data();
+		var loopNumber=0;
+		 
+		 var increaseSymbol=false;
+		 ///Increase Sites
+		 if(db.length < $scope.sites){
+		       loopNumber= $scope.sites-db.length;
+			   increaseSymbol=true;
+		 }
+		 ///Decrease Sites
+		 if(db.length > $scope.sites){
+			loopNumber=$scope.sites;
+		 
+		 }
+		var i=0;
+		if(increaseSymbol){
+        for(i=0;i<loopNumber; i ++){
+				db.push({StudyId:db.length+1,StudyTrailId:["1"], StudyName:'', SIDate:'',SIActual:'N',SSVDate:'',SSVActual:'N',SSU:''});
+		}}else{
+         for(i=db.length-1;i>=loopNumber;i--){ 
+				db.splice(i,1);
+		 }
+		}
+		
+	};
+
+	
+	
+	
+	$scope.changesSIDate=function(dataItem){
+	
+	
+	if(dataItem.SSVDate!='' && dataItem.SIDate !=''){
+	if(!moment(dataItem.SIDate).isAfter(dataItem.SSVDate)){
+		alert('SI date is less then SSV date');
+		 dataItem.SIDate= "";
+		return;
+		}
+	}
+	  dataItem.SSU= 
+	  moment(dataItem.SIDate).diff((moment(dataItem.SSVDate)), 'days');
+		//moment('2010-10-20').isAfter('2010-10-19');	
+		console.log(dataItem);
+	}
 	$scope.changesSSVDate=function(dataItem){
+	
+	$scope.dataSource.fetch();
+	var db= $scope.dataSource.data();
+	console.log(db);
+	
+	
+	if(dataItem.SSVDate!='' && dataItem.SIDate !=''){
+	if(!moment(dataItem.SSVDate).isBefore(dataItem.SIDate)){
+		alert('SSV date is less then SI date');
+	    dataItem.SSVDate= "";
+		return;
+	}
+	}
+	  dataItem.SSU= 
+		moment(dataItem.SIDate).diff((moment(dataItem.SSVDate)), 'days');
 	  console.log(dataItem);
-	  
-	  
 	}
 	
 	
@@ -149,10 +273,12 @@
         $scope.mainGridOptions = {
           dataSource: $scope.dataSource,
           columns: [ 
-					{field:"StudyId", title:"StudyId", width:"170px"},		
-					{field:"StudyName", title:"StudyName" ,	width: "170px" },
-					{field:"SSVDate", title:"SSVDate" ,	template:angular.element("#myTemplate2").html() ,width: "29%"},
-					{field:"filters", title:"filters" ,	template:angular.element("#myTemplate").html()}
+					{field:"StudyId", title:"StudyId",width: "05%"},		
+					//{field:"StudyName", title:"StudyName" ,	width: "170px" },
+					{field:"SSVDate", title:"SSV" ,	template:angular.element("#myTemplate3").html() ,width: "38%"},
+					{field:"SSU", title:"SSU" ,	template:angular.element("#myTemplate4").html() ,width: "7%"},
+					{field:"SIDate", title:"SI" ,	template:angular.element("#myTemplate2").html() ,width: "38%"},
+					{field:"filters", title:"filters" ,	template:angular.element("#myTemplate").html(), width: "20%"}
 			]
 		  , sortable: true
         };
