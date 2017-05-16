@@ -76,7 +76,7 @@
 		    Site # 
 		 </div>
 		 <div class="col-md-2">
-		    <input type="text" ng-model="sites" />
+		    <input type="text" ng-model="sites" name="sites"/>
 		 </div>
 		 <div class="col-md-2">
 			<kendo-button class="k-primary" ng-click="AddRows()">Update Tables</kendo-button>  
@@ -187,6 +187,7 @@
 	
 	$scope.AddRows=function(){
 	//Add new rows in exisiting grid 
+	
 		$scope.dataSource.fetch();
 		var db= $scope.dataSource.data();
 		var loopNumber=0;
@@ -211,12 +212,32 @@
 				db.splice(i,1);
 		 }
 		}
+		gridInit(db);
+	 
 		
 	};
 
 	
+	function gridInit(dataSource){
 	
-	
+	 $scope.dataSource = new kendo.data.DataSource({
+		pageSize: 20,
+      //  data: products,
+		data:dataSource,
+        autoSync: true,
+        schema: {
+          model: {
+			id:"StudyId",
+            fields:{
+			StudyId: { editable: false, nullable: true }, 
+			//StudyTrailId: { nullable: true }, 
+			StudyName :{ nullable: true },
+			}			
+			
+          }
+        }
+      });
+	}
 	$scope.changesSIDate=function(dataItem){
 	
 	
@@ -250,25 +271,8 @@
 		moment(dataItem.SIDate).diff((moment(dataItem.SSVDate)), 'days');
 	  console.log(dataItem);
 	}
-	
-	
-    $scope.dataSource = new kendo.data.DataSource({
-        pageSize: 20,
-      //  data: products,
-	  data:$scope.Studies,
-        autoSync: true,
-        schema: {
-          model: {
-			id:"StudyId",
-            fields:{
-			StudyId: { editable: false, nullable: true }, 
-			//StudyTrailId: { nullable: true }, 
-			StudyName :{ nullable: true },
-			}			
-			
-          }
-        }
-      });
+	gridInit($scope.Studies);
+		
 		
         $scope.mainGridOptions = {
           dataSource: $scope.dataSource,
