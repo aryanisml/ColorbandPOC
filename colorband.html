@@ -184,8 +184,6 @@
 	$scope.AddRows=function(){
 	//Add new rows in exisiting grid 
 	
-<<<<<<< HEAD:demo2.html
-=======
 	    if($scope.sites==0){
 		 alert('Enter sites');
 		 $scope.sites=="";
@@ -193,7 +191,6 @@
 		}
 	
 	
->>>>>>> Added component Code:colorband.html
 		$scope.dataSource.fetch();
 		var db= $scope.dataSource.data();
 		var loopNumber=0;
@@ -216,15 +213,7 @@
 				db.push({StudyId:db.length+1,StudyTrailId:["1"], StudyName:'', SIDate:'',SIActual:'N',SSVDate:'',SSVActual:'N',SSU:'',validDates:'Y'});
 		}}else{
          for(i=db.length-1;i>=loopNumber;i--){ 
-<<<<<<< HEAD:demo2.html
-				db.splice(i,1);
-		 }
-		}
-		gridInit(db);
-	 
-=======
 				db.splice(i,1);}
->>>>>>> Added component Code:colorband.html
 		
 		}
 		 $scope.dataSource = new kendo.data.DataSource({
@@ -234,15 +223,8 @@
 
 	
 	function gridInit(dataSource){
-<<<<<<< HEAD:demo2.html
-	
-	 $scope.dataSource = new kendo.data.DataSource({
-		pageSize: 20,
-      //  data: products,
-=======
 	 $scope.dataSource = new kendo.data.DataSource({
 		pageSize: 50,
->>>>>>> Added component Code:colorband.html
 		data:dataSource,
         autoSync: true,
         schema: {
@@ -253,10 +235,6 @@
 			//StudyTrailId: { nullable: true }, 
 			StudyName :{ nullable: true },
 			}			
-<<<<<<< HEAD:demo2.html
-			
-=======
->>>>>>> Added component Code:colorband.html
           }
         }
       });
@@ -297,14 +275,8 @@
 	  console.log(dataItem);
 	}
 	gridInit($scope.Studies);
-<<<<<<< HEAD:demo2.html
-		
-		
-        $scope.mainGridOptions = {
-=======
 
  $scope.mainGridOptions = {
->>>>>>> Added component Code:colorband.html
           dataSource: $scope.dataSource,
           columns: [ 
 					{field:"StudyId", title:"StudyId",width: "05%"},		
