@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="http://demos.telerik.com/kendo-ui/grid/angular">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title>my test</title>
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.607/styles/kendo.common-bootstrap.min.css" />
+    <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.2.607/styles/kendo.bootstrap.min.css" />
+
+    <script src="//kendo.cdn.telerik.com/2016.2.607/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.js"></script>
+    <script src="//kendo.cdn.telerik.com/2016.2.607/js/kendo.all.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+  </head>
+  <style>
+    body{ 
+    font: 13px sans-serif;
+    }
+    .one{
+		background: red !important;
+    }
+    .two{
+		background: yellow !important;        
+    }
+    .three{
+        background: green !important;        
+    }
+	.four{
+	    background: orange !important;        
+	}
+	.five{
+	    background: blue !important;        
+	}
+	.top-buffer { margin-top:20px; }
+    
+</style>
+  <body>
+    <div id="myTemplate" style="display: none">
+      <div>
+		 <div  class="col-xs-12" style="border:solid; background-color:purple; width:50px;">
+				<div ng-repeat="n in dataItem.StudyTrailId" style="margin-left:-16px;">
+					<div  ng-class="{'one':$index===0 , 'two' :$index===1, 'three' :$index===2 ,'four':$index===3,'five':$index===4}" 
+                    style="float:left!important; width:07.3px;"> &nbsp;
+					</div>
+				</div>
+		</div>
+      </div>
+    </div>
+	<div id="myTemplate2" style="display: none">
+	<input kendo-date-picker k-format="'dd MMM yyyy'" name="siDate" style="width:30%" ng-model="dataItem.SIDate" ng-if="dataItem.SIActual=='N' "  k-on-change="changesSIDate(dataItem)" /> 
+	 <label ng-if="dataItem.SIActual=='Y'">{{dataItem.SIDate}}</label> 
+	</div>
+	
+	<div id="myTemplate3" style="display: none">
+	<input kendo-date-picker k-format="'dd MMM yyyy'" name="ssvDate" style="width:30%" ng-model="dataItem.SSVDate" ng-if="dataItem.SSVActual=='N' "  k-on-change="changesSSVDate(dataItem)" /> 
+	 <label ng-if="dataItem.SSVActual=='Y'">{{dataItem.SSVDate}}</label> 
+	</div>
+
+	<div id="myTemplate4" style="display: none">
+		{{dataItem.SSU}}  <span ng-if="dataItem.validDates=='N'" title="Date issue" style="color:red">*</span>
+	</div>
+    <div id="example" ng-app="KendoDemos">
+      <div ng-controller="MyCtrl">
+	  <div class="container">
+		<div class="row top-buffer">
+		 <div class="col-md-1">
+		    Site # 
+		 </div>
+		 <div class="col-md-2">
+		    <input type="text" ng-model="sites" name="sites"/>
+		 </div>
+		 <div class="col-md-2">
+			<kendo-button class="k-primary" ng-click="AddRows()">Update Tables</kendo-button>  
+		 </div>
+		</div>
+		<div class="row top-buffer">
+		<div class="col-md-12">
+        <kendo-grid options="mainGridOptions" >
+        </kendo-grid>
+		</div>
+		
+		</div>
+	  </div>
+	  
+	     
+      </div>
+    </div>
+
+    <script>
+      angular.module("KendoDemos", [ "kendo.directives","angularMoment" ])
+        .controller("MyCtrl", function($scope,moment){
+		
+        console.log( angular.element("#myTemplate").html());
+		console.log( angular.element("#myTemplate2").html());
+		
+				
+	 $scope.Studies = [
+			 {
+			  StudyId:1,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ABC',
+			  SIDate:'10 May 2017',
+			  SIActual:'Y',
+			  SSVDate :'01 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'39',
+			  validDates:'Y'
+			  },
+			  
+			  {
+			  StudyId:2,
+			  StudyTrailId:["1","2"],
+			  StudyName:'BEX',
+			  SIDate:'12 May 2017'
+			   ,SIActual:'Y',
+			  SSVDate :'10 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'32',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:3,
+			  StudyTrailId:["1"],
+			  StudyName:'CDE',
+			  SIDate:'15 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'09 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:4,
+			  StudyTrailId:["1","2","3","4"],
+			  StudyName:'DERR',
+			  SIDate:'18 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'12 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:5,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ERRR',
+			  SIDate:'18 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'15 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'33',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:6,
+			  StudyTrailId:["1","2"],
+			  StudyName:'FRRR',
+			  SIDate:'20 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'20 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30',
+			  validDates:'Y'
+			  },
+				{
+			  StudyId:7,
+			  StudyTrailId:["1","2","3","4","5"],
+			  StudyName:'FRRR',
+			  SIDate:'22 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'22 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30',
+			  validDates:'Y'
+			  }
+
+		];
+	
+	
+	$scope.AddRows=function(){
+	//Add new rows in exisiting grid 
+	
+<<<<<<< HEAD:demo2.html
+=======
+	    if($scope.sites==0){
+		 alert('Enter sites');
+		 $scope.sites=="";
+		// return;
+		}
+	
+	
+>>>>>>> Added component Code:colorband.html
+		$scope.dataSource.fetch();
+		var db= $scope.dataSource.data();
+		var loopNumber=0;
+		 
+		 var increaseSymbol=false;
+		 ///Increase Sites
+		 if(db.length < $scope.sites){
+		
+		       loopNumber= $scope.sites-db.length;
+			   increaseSymbol=true;
+		 }
+		 ///Decrease Sites
+		 if(db.length > $scope.sites){
+			loopNumber=$scope.sites;
+		 }
+		var i=0;
+		if(increaseSymbol){
+		
+        for(i=0;i<loopNumber; i ++){
+				db.push({StudyId:db.length+1,StudyTrailId:["1"], StudyName:'', SIDate:'',SIActual:'N',SSVDate:'',SSVActual:'N',SSU:'',validDates:'Y'});
+		}}else{
+         for(i=db.length-1;i>=loopNumber;i--){ 
+<<<<<<< HEAD:demo2.html
+				db.splice(i,1);
+		 }
+		}
+		gridInit(db);
+	 
+=======
+				db.splice(i,1);}
+>>>>>>> Added component Code:colorband.html
+		
+		}
+		 $scope.dataSource = new kendo.data.DataSource({
+		 data:db,
+		 });
+	};
+
+	
+	function gridInit(dataSource){
+<<<<<<< HEAD:demo2.html
+	
+	 $scope.dataSource = new kendo.data.DataSource({
+		pageSize: 20,
+      //  data: products,
+=======
+	 $scope.dataSource = new kendo.data.DataSource({
+		pageSize: 50,
+>>>>>>> Added component Code:colorband.html
+		data:dataSource,
+        autoSync: true,
+        schema: {
+          model: {
+			id:"StudyId",
+            fields:{
+			StudyId: { editable: false, nullable: true }, 
+			//StudyTrailId: { nullable: true }, 
+			StudyName :{ nullable: true },
+			}			
+<<<<<<< HEAD:demo2.html
+			
+=======
+>>>>>>> Added component Code:colorband.html
+          }
+        }
+      });
+	}
+	$scope.changesSIDate=function(dataItem){
+	
+	
+	if(dataItem.SSVDate!='' && dataItem.SIDate !=''){
+	if(!moment(dataItem.SIDate).isAfter(dataItem.SSVDate)){
+		dataItem.validDates='N';
+		alert('SI date is less then SSV date');
+		 dataItem.SIDate= "";
+		return;
+		}
+	}
+	  dataItem.SSU= 
+	  moment(dataItem.SIDate).diff((moment(dataItem.SSVDate)), 'days');
+		//moment('2010-10-20').isAfter('2010-10-19');	
+		console.log(dataItem);
+	}
+	$scope.changesSSVDate=function(dataItem){
+	
+	$scope.dataSource.fetch();
+	var db= $scope.dataSource.data();
+	console.log(db);
+	
+	
+	if(dataItem.SSVDate!='' && dataItem.SIDate !=''){
+	if(!moment(dataItem.SSVDate).isBefore(dataItem.SIDate)){
+		dataItem.validDates='N';
+		alert('SSV date is less then SI date');
+	    dataItem.SSVDate= "";
+		return;
+	}
+	}
+	  dataItem.SSU= 
+	  moment(dataItem.SIDate).diff((moment(dataItem.SSVDate)), 'days');
+	  console.log(dataItem);
+	}
+	gridInit($scope.Studies);
+<<<<<<< HEAD:demo2.html
+		
+		
+        $scope.mainGridOptions = {
+=======
+
+ $scope.mainGridOptions = {
+>>>>>>> Added component Code:colorband.html
+          dataSource: $scope.dataSource,
+          columns: [ 
+					{field:"StudyId", title:"StudyId",width: "05%"},		
+					//{field:"StudyName", title:"StudyName" ,	width: "170px" },
+					{field:"SSVDate", title:"SSV" ,	template:angular.element("#myTemplate3").html() ,width: "38%"},
+					{field:"SSU", title:"SSU" ,	template:angular.element("#myTemplate4").html() ,width: "7%"},
+					{field:"SIDate", title:"SI" ,	template:angular.element("#myTemplate2").html() ,width: "38%"},
+					{field:"filters", title:"filters" ,	template:angular.element("#myTemplate").html(), width: "20%"}
+			]
+		  , sortable: true
+        };
+      })
+    </script>
+
+
+  </body>
+</html>
