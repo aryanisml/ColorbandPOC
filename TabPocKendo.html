@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="http://demos.telerik.com/kendo-ui/tabstrip/angular">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.mobile.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2017.2.504/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.504/js/angular.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.504/js/kendo.all.min.js"></script>
+</head>
+<body>
+<div id="example" ng-app="KendoDemos">
+    <div class="demo-section k-content">
+        <div ng-controller="MyCtrl">
+            <div kendo-tab-strip k-content-urls="[ null, null]">
+              <!-- tab list -->
+              <ul>
+                <li class="k-state-active">{{myCount}}
+                </li>
+                <li>{{mySecondCount}} {{mySelectionCount}}
+                </li>
+              </ul>
+              <div style="padding: 1em">
+                This is the first tab
+                <input type="text" ng-model="myValue" />
+                <button ng-click="myClick()">Okay</button>
+              </div>
+              <div style="padding: 1em">
+                This is the second tab
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  angular.module("KendoDemos", [ "kendo.directives" ])
+      .controller("MyCtrl", function($scope){
+          $scope.hello = "Hello from Controller!";
+          $scope.myCount="Searched";
+    $scope.mySecondCount="Selected";
+    $scope.mySelectionCount="0";
+    
+    $scope.myClick =function(){
+    
+    $scope.mySelectionCount=$scope.myValue;
+    
+    }
+    
+    
+      })
+</script>
+
+
+</body>
+</html>
