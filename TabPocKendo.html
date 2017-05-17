@@ -191,8 +191,7 @@
 					{field:"StudyId", title:"StudyId",width: "05%"},	
             {
             title:"Select",field:"",
-             headerTemplate: `<input type="checkbox" id="header-chb" class="k-checkbox">
-<label class="k-checkbox-label" for="header-chb"></label>`,
+             headerTemplate: `<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClickAll()"></input>`,
              template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick(dataItem)"></input>', width: "32%"}
            ,
 					{field:"SSVDate", title:"SSV"  ,width: "38%"},
@@ -203,6 +202,13 @@
 		  , sortable: true
         };
     
+  $scope.getClickAll=function(){
+         var dbItemNew= $scope.dataSource.data();
+        console.log(dbItemNew);
+};
+
+
+
        $scope.getClick2 = function(item){
          //console.log(item);
          var dbItem= $scope.dataSource2.data();
@@ -216,6 +222,9 @@
            array=dbItem;
           }
         };
+
+
+
        $scope.getClick = function(item){
          console.log(array);
          if(item.admin){
@@ -251,7 +260,7 @@
       }    
         
         
-        }
+        };
     
     
     
