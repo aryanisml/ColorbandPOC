@@ -3,7 +3,7 @@
 <head>
     <base href="http://demos.telerik.com/kendo-ui/tabstrip/angular">
     <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
-    <title></title>
+    <title>POC HA Search Result</title>
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.mobile.min.css" />
@@ -19,18 +19,20 @@
             <div kendo-tab-strip k-content-urls="[ null, null]">
               <!-- tab list -->
               <ul>
-                <li class="k-state-active">{{myCount}}
+                <li class="k-state-active">Searched {{myCount}}
                 </li>
                 <li>{{mySecondCount}} {{mySelectionCount}}
                 </li>
               </ul>
               <div style="padding: 1em">
-                This is the first tab
-                <input type="text" ng-model="myValue" />
-                <button ng-click="myClick()">Okay</button>
+                    <kendo-grid options="mainGridOptions" >
+        </kendo-grid>
+                
+                      
               </div>
               <div style="padding: 1em">
-                This is the second tab
+        <kendo-grid options="mainGridOptions2" k-rebind="mainGridOptions2">
+        </kendo-grid>
               </div>
             </div>
         </div>
@@ -41,7 +43,7 @@
   angular.module("KendoDemos", [ "kendo.directives" ])
       .controller("MyCtrl", function($scope){
           $scope.hello = "Hello from Controller!";
-          $scope.myCount="Searched";
+         
     $scope.mySecondCount="Selected";
     $scope.mySelectionCount="0";
     
@@ -50,6 +52,207 @@
     $scope.mySelectionCount=$scope.myValue;
     
     }
+    
+     var array=[];
+     var arrayRemove=[];
+    
+    
+				
+	 $scope.Studies = [
+			 {
+			  StudyId:1,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ABC',
+			  SIDate:'10 May 2017',
+			  SIActual:'Y',
+			  SSVDate :'01 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'39',
+			  validDates:'Y'
+			  },
+			  
+			  {
+			  StudyId:2,
+			  StudyTrailId:["1","2"],
+			  StudyName:'BEX',
+			  SIDate:'12 May 2017'
+			   ,SIActual:'Y',
+			  SSVDate :'10 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'32',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:3,
+			  StudyTrailId:["1"],
+			  StudyName:'CDE',
+			  SIDate:'15 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'09 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:4,
+			  StudyTrailId:["1","2","3","4"],
+			  StudyName:'DERR',
+			  SIDate:'18 May 2017'
+			  ,SIActual:'Y',
+			  SSVDate :'12 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'36',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:5,
+			  StudyTrailId:["1","2","3"],
+			  StudyName:'ERRR',
+			  SIDate:'18 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'15 Apr 2017',
+			  SSVActual:'Y',
+			  SSU:'33',
+			  validDates:'Y'
+			  },
+			  {
+			  StudyId:6,
+			  StudyTrailId:["1","2"],
+			  StudyName:'FRRR',
+			  SIDate:'20 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'20 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30',
+			  validDates:'Y'
+			  },
+				{
+			  StudyId:7,
+			  StudyTrailId:["1","2","3","4","5"],
+			  StudyName:'FRRR',
+			  SIDate:'22 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'22 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30',
+			  validDates:'Y'
+			  }
+
+		];
+     $scope.myCount=$scope.Studies.length;
+     $scope.dataSource = new kendo.data.DataSource({
+		pageSize: 50,
+		data:$scope.Studies,
+        autoSync: true,
+        schema: {
+          model: {
+			id:"StudyId",
+            fields:{
+			StudyId: { editable: false, nullable: true }, 
+			//StudyTrailId: { nullable: true }, 
+			StudyName :{ nullable: true }
+             
+			}			
+          }
+        }
+      });
+    
+    $scope.Studies2=[	{
+			  StudyId:7,
+			  StudyTrailId:["1","2","3","4","5"],
+			  StudyName:'FRRR',
+			  SIDate:'22 May 2017'
+			  ,SIActual:'N',
+			  SSVDate :'22 Apr 2017',
+			  SSVActual:'N',
+			  SSU:'30',
+			  validDates:'Y'
+			  }];
+      $scope.dataSource2 = new kendo.data.DataSource({
+		pageSize: 50,
+		data:null,
+        autoSync: true,
+        schema: {
+          model: {
+			id:"StudyId",
+            fields:{
+			StudyId: { editable: false, nullable: true }, 
+			//StudyTrailId: { nullable: true }, 
+			StudyName :{ nullable: true }
+             
+			}			
+          }
+        }
+      });
+    
+ $scope.mainGridOptions = {
+          dataSource: $scope.dataSource,
+          columns: [ 
+					{field:"StudyId", title:"StudyId",width: "05%"},	
+            {
+            title:"Select",field:"",
+             headerTemplate: `<input type="checkbox" id="header-chb" class="k-checkbox">
+<label class="k-checkbox-label" for="header-chb"></label>`,
+             template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick(dataItem)"></input>', width: "32%"}
+           ,
+					{field:"SSVDate", title:"SSV"  ,width: "38%"},
+					{field:"SSU", title:"SSU"  ,width: "7%"},
+					{field:"SIDate", title:"SI"  ,width: "38%"},
+					{field:"filters", title:"filters" , width: "20%"}
+			]
+		  , sortable: true
+        };
+    
+       $scope.getClick2 = function(item){
+         //console.log(item);
+         var dbItem= $scope.dataSource2.data();
+          if(!item.admin){
+          angular.forEach(dbItem, function(value, key) {     
+               if(item.admin==value.admin){
+                 dbItem.splice(key,1);
+               }
+          });
+           $scope.mySelectionCount=dbItem.length;
+           array=dbItem;
+          }
+        };
+       $scope.getClick = function(item){
+         console.log(array);
+         if(item.admin){
+            array.push(item);
+	          $scope.dataSource2 = new kendo.data.DataSource({
+		        data:array,
+		       });
+             $scope.mainGridOptions2 = {
+          dataSource: $scope.dataSource2,
+          columns: [ 
+					{field:"StudyId", title:"StudyId",width: "05%"},	
+            {
+            title:"Select",field:"", template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick2(dataItem)"></input>', width: "32%"}
+           ,
+					{field:"SSVDate", title:"SSV"  ,width: "38%"},
+					{field:"SSU", title:"SSU"  ,width: "7%"},
+					{field:"SIDate", title:"SI"  ,width: "38%"},
+					{field:"filters", title:"filters" , width: "20%"}
+			]
+		  , sortable: true
+        };
+      $scope.mySelectionCount=array.length;
+      }else{
+         var dbItem= $scope.dataSource2.data();
+          angular.forEach(dbItem, function(value, key) {     
+                if(item.admin==value.admin){
+                     console.log(value);
+                       dbItem.splice(key,1);
+               }
+          });
+          array=dbItem;
+        $scope.mySelectionCount=dbItem.length;
+      }    
+        
+        
+        }
+    
     
     
       })
