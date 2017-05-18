@@ -25,7 +25,7 @@
                 </li>
               </ul>
               <div style="padding: 1em">
-                <kendo-grid options="mainGridOptions" >
+                <kendo-grid options="mainGridOptions">
                 </kendo-grid>  
               </div>
               <div style="padding: 1em">
@@ -184,11 +184,7 @@ $scope.getClickAll2=function(dataItem){
                             dataSource: $scope.dataSource2,
                             columns: [ 
                             {field:"StudyId", title:"StudyId",width: "05%"},	
-                            {
-                            title:"Select",field:"",
-                              headerTemplate: `<input ng-model ="dataItem.selectedAll" type="checkbox" ng-change="getClickAll2(dataItem)"></input>`,
-                             template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick2(dataItem)"></input>', width: "32%"}
-                            ,
+                            {title:"Select",field:""},
                             {field:"SSVDate", title:"SSV"  ,width: "38%"},
                             {field:"SSU", title:"SSU"  ,width: "7%"},
                             {field:"SIDate", title:"SI"  ,width: "38%"},
@@ -197,15 +193,16 @@ $scope.getClickAll2=function(dataItem){
                             , sortable: true
                           };
                           array=[];
-                // $scope.mySelectionCount=0;
-                //  var fd= $scope.dataSource.data();
-                //   for(var i = 0; i<fd.length; i++){
-                //   	var item = fd.at(i)
-                //     item.set('admin', false);
-                //      }
+                 $scope.mySelectionCount=0;
+                 var fd= $scope.dataSource.data();
+                  for(var i = 0; i<fd.length; i++){
+                  	var item = fd.at(i)
+                    item.set('admin', false);
+                     }
                 //        $scope.dataSource=new kendo.data.DataSource({
                 //       data:fd
                 //      });
+                console.log($scope.dataSource.data());
  
               }
               else{
@@ -215,7 +212,7 @@ $scope.getClickAll2=function(dataItem){
     
    deslectAll=dataItem.selectedAll;
    var firstGridData= $scope.dataSource.data();
-   
+   console.log(firstGridData);
    var newData=firstGridData;
     for(var i = 0; i<firstGridData.length; i++){
             	var item = firstGridData.at(i)
@@ -310,11 +307,6 @@ $scope.getClickAll2=function(dataItem){
                                   ]
                                   , sortable: true
                                   };
-                                //  $scope.dataSource2 = new kendo.data.DataSource({
-                                //        data :dbsecondGrid
-                                //  })  
-
-                      //array=myArray;
                       $scope.mySelectionCount=myArray.length;  
         };
             $scope.mainGridOptions2 = {
@@ -348,7 +340,7 @@ $scope.getClickAll2=function(dataItem){
                                   {field:"StudyId", title:"StudyId",width: "05%"},	
                                   {
                                   title:"Select",field:"",
-                                  headerTemplate: `<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClickAll(dataItem.admin)"></input>`,
+                                  headerTemplate: `<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClickAll2(dataItem.admin)"></input>`,
                                   template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick2(dataItem)"></input>', width: "32%"},
                                   {field:"SSVDate", title:"SSV"  ,width: "38%"},
                                   {field:"SSU", title:"SSU"  ,width: "7%"},
@@ -377,7 +369,7 @@ $scope.getClickAll2=function(dataItem){
                                   {field:"StudyId", title:"StudyId",width: "05%"},	
                                   {
                                   title:"Select",field:"",
-                                  headerTemplate: `<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClickAll(dataItem.admin)"></input>`,
+                                  headerTemplate: `<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClickAll2(dataItem.admin)"></input>`,
                                   template : '<input ng-model ="dataItem.admin" type="checkbox" ng-change="getClick2(dataItem)"></input>', width: "32%"},
                                   {field:"SSVDate", title:"SSV"  ,width: "38%"},
                                   {field:"SSU", title:"SSU"  ,width: "7%"},
