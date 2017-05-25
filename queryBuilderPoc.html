@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="http://demos.telerik.com/kendo-ui/tabstrip/angular">
+    <style>html { font-size: 14px; font-family: Arial, Helvetica, sans-serif; }</style>
+    <title>Query Builder</title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.2.504/styles/kendo.metroblack.mobile.min.css" />
+
+    <script src="https://kendo.cdn.telerik.com/2017.2.504/js/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.9/angular.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.2.504/js/kendo.all.min.js"></script>
+    
+</head>
+<body ng-app="myApp">
+    <my-query-builder></my-query-builder>
+</body>
+<script>
+    angular.module('myApp',[])
+    .component('myQueryBuilder',{
+         template: 'Enter Search <input type="text" ng-model="$ctrl.enterSearch">  <button ng-click="$ctrl.show()">Show Result</button> </br> {{$ctrl.result | json}} </br> {{$ctrl.condition}}',
+            controller: MyCtrl
+    })
+
+ function MyCtrl(){
+    var  vm=this;
+    
+    vm.$onInit=onInit;
+
+    function onInit(){
+        vm.query={
+  "condition": "AND",
+  "rules": [
+    {
+      "id": "price",
+      "field": "price",
+      "type": "double",
+      "input": "number",
+      "operator": "less",
+      "value": "10.25",
+      "data" : { "ruleId": "ruleid_1", 
+       "groupId": ""
+    }
+    },
+    {
+      "condition": "OR",
+      "rules": [
+        {
+          "id": "category",
+          "field": "category",
+          "type": "integer",
+          "input": "select",
+          "operator": "equal",
+          "value": "2"
+        },
+        {
+          "id": "category",
+          "field": "category",
+          "type": "integer",
+          "input": "select",
+          "operator": "equal",
+          "value": "1"
+        },
+      ],
+      "data" : { 
+          "groupId": "groupId_1",
+          "parentId": "ruleid_1" 
+        }    
+    },
+     {
+      "condition": "xyz",
+      "rules": [
+        {
+          "id": "category1111",
+          "field": "category",
+          "type": "integer",
+          "input": "select",
+          "operator": "equal",
+          "value": "2"
+        },
+        {
+          "id": "category11",
+          "field": "category",
+          "type": "integer",
+          "input": "select",
+          "operator": "equal",
+          "value": "1"
+        },
+      ],
+      "data" : { 
+          "groupId": "groupId_2",
+          "parentId": "ruleid_1" 
+        }    
+    }
+  ],
+  "valid": true
+};        
+    }
+ 
+vm.show=function(){
+        var inputGroupid =vm.enterSearch;
+        angular.forEach(vm.query, function(value, key) { 
+              if(isObject(value)){
+                  for (i=0; i<value.length;i++){
+                        console.log(value[i].data.groupId);
+                        if(value[i].data.groupId==inputGroupid){
+                        vm.result= value[i].rules ;
+                        vm.condition= value[i].condition;  
+                  }
+                }
+              }
+          });
+
+function isObject (item) {
+  return (typeof item === "object"  && item !== null);
+}
+
+
+
+    }
+ }
+
+</script>
+</html>

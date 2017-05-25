@@ -11,6 +11,9 @@
     <script src="https://kendo.cdn.telerik.com/2017.2.504/js/jquery.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.2.504/js/angular.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2017.2.504/js/kendo.all.min.js"></script>
+  
+kendo.custom
+kendo.custom.less
 </head>
 <body>
 <div id="example" ng-app="KendoDemos">
@@ -19,7 +22,7 @@
             <div kendo-tab-strip k-content-urls="[ null, null]">
               <!-- tab list -->
               <ul>
-                <li class="k-state-active">Searched {{myCount}}
+                <li class="k-state-active">Searched( {{myCount}} )
                 </li>
                 <li>{{mySecondCount}} {{mySelectionCount}}
                 </li>
@@ -39,8 +42,12 @@
 
 <script>
   angular.module("KendoDemos", [ "kendo.directives" ])
-      .controller("MyCtrl", function($scope){
-        var array=[];
+      .controller("MyCtrl", function($scope, $element){
+    
+      // var d= $element.find("#selectionAll");
+      // console.log(d);
+
+    var array=[];
      var arrayRemove=[];
      var deslectAll=false;
           $scope.hello = "Hello from Controller!";
@@ -152,16 +159,14 @@
           }
         }
       });
-    
-
-    
+     
  $scope.mainGridOptions = {
           dataSource: $scope.dataSource,
           columns: [ 
 					{field:"StudyId", title:"StudyId",width: "05%"},	
             {
             title:"Select",field:"",
-             headerTemplate: `<input ng-model ="dataItem.selectedAll" type="checkbox" ng-change="getClickAll(dataItem)"></input>`,
+             headerTemplate: `<input ng-model ="dataItem.selectedAll" id="selectionAll" type="checkbox" ng-change="getClickAll(dataItem)"></input>`,
              template : '<input  ng-model ="dataItem.admin" type="checkbox" ng-change="getClick(dataItem)"></input>', width: "32%"}
            ,
 					{field:"SSVDate", title:"SSV"  ,width: "38%"},
@@ -170,8 +175,12 @@
 					{field:"filters", title:"filters" , width: "20%"}
 			]
 		  , sortable: true
+      ,dataBound:myDataBound
         };
     
+    function myDataBound(e){
+     //console.log(e);
+    }
 
 $scope.getClickAll2=function(dataItem){
   if(!dataItem.selectedAll){
@@ -245,7 +254,7 @@ $scope.getClickAll2=function(dataItem){
             };
             array=newData;
             $scope.mySelectionCount=array.length;
-      }
+      } 
             else{
                $scope.dataSource2=new kendo.data.DataSource({
               data:null
@@ -333,7 +342,7 @@ $scope.getClickAll2=function(dataItem){
        $scope.getClick = function(item){
                 var dbfirstGrid = $scope.dataSource.data();
                   if(item.admin){
-                    console.log(array);
+                   // console.log(array);
                       angular.forEach(array, function(value, key) {     
                             if(item.StudyId!=value.StudyId){
                                 // console.log(value)            ;
