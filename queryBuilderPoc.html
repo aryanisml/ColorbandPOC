@@ -102,13 +102,13 @@ vm.show=function(){
         var inputGroupid =vm.enterSearch;
         angular.forEach(vm.query, function(value, key) { 
               if(isObject(value)){
-                  for (i=0; i<value.length;i++){
-                        console.log(value[i].data.groupId);
-                        if(value[i].data.groupId==inputGroupid){
-                        vm.result= value[i].rules ;
-                        vm.condition= value[i].condition;  
+                    for (i=0; i<value.length;i++){
+                          console.log(value[i].data.groupId);
+                          if(value[i].data.groupId==inputGroupid){
+                          vm.result= value[i].rules ;
+                          vm.condition= value[i].condition;  
+                    }
                   }
-                }
               }
           });
 
