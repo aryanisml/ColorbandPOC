@@ -1,2 +1,11 @@
-<child-component my-name='Angular'    my-two-way="$ctrl.heroTwoWayBinding"        my-data="$ctrl.hero" parent-click="$ctrl.show({description})" parent-diff-click="$ctrl.diffClick({EmployeeName})"></child-component>
+<child-component    my-name='Angular'    my-two-way="$ctrl.heroTwoWayBinding"        my-data="$ctrl.hero" parent-click="$ctrl.show({description})" parent-diff-click="$ctrl.diffClick({EmployeeName})"   primitive-value="$ctrl.primitiveValue" ></child-component>
 hello  {{$ctrl.heroTwoWayBinding}}
+<br/>   
+<br/>
+<br/>
+<br/>
+One Way Binding it never going to change <input type="text" ng-model="$ctrl.primitiveValue"/>
+<div>
+    <input type="text" ng-model="$ctrl.sites"/>
+<button ng-click="$ctrl.Add()">Add</button>
+</div>
