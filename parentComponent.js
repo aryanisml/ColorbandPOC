@@ -34,13 +34,14 @@
         $ctrl.$onInit = function() { 
             $ctrl.hero=[{'name':'D'},{'name':'A'},{'name':'B'},{'name':'C'}];
             $ctrl.heroTwoWayBinding="Swapnil";
+            $ctrl.primitiveValue='On Change Example()';
             
-            
-
-
-
         };
         $ctrl.$onChanges = function(changesObj) { };
+        $ctrl.Add=function(){
+             $ctrl.hero.push({'name':$ctrl.sites});
+             console.log($ctrl.hero);
+        };
         $ctrl.$onDestroy = function() { };
     }
 })();
