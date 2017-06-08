@@ -6,5 +6,10 @@
     </li>
 </ul>
 <input type="text" ng-model="$ctrl.myTwoWay">
+<br/> {{$ctrl.myName}}
 <br/>
-{{$ctrl.myName}}
+On Changes Value {{$ctrl.primitiveValue}} <input type="text" ng-model="$ctrl.primitiveValue"/>
+<br/> 
+On Changes {{$ctrl.myData|json}}
+
+<button id="btnDestory">On Destory</button>
