@@ -1,0 +1,8 @@
+<button ng-click="$ctrl.parentClick({description:'swap'})" value="Show">Same Name</button>
+<button ng-click="$ctrl.parentAnotherClick()" value="Show">Different Name</button>
+<ul ng-repeat="item in $ctrl.myData">
+    <li>
+        {{item.name}}
+    </li>
+</ul>
+<input type="text" ng-model="$ctrl.myTwoWay">
