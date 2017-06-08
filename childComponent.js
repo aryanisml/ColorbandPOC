@@ -20,7 +20,9 @@
                 //One Way
                 myData:'<',
                 //Two Way
-                myTwoWay:'='
+                myTwoWay:'=',
+                //Input as String
+                myName:'@'
             },
         });
 
