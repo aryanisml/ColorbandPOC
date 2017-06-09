@@ -1,0 +1,46 @@
+<script type="text/x-kendo-template" id="searchTemplate">
+    <div>
+        <div>
+            <div class="col-xs-12 study-colorband">
+                <div ng-repeat="n in dataItem.StudyTrailId" class="study-colorband-main">
+                        <div ng-class="$ctrl.colorBandLogic(n)" class="study-colorband-result">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="searchHeaderTemplate">
+    <div>
+        <input ng-model="dataItem.checkAll" ng-if="$ctrl.searchAll==false" type="checkbox" ng-change="$ctrl.checkAllResultClick(dataItem)"></input>
+        <input ng-model="dataItem.checkAll" ng-if="$ctrl.searchAll==true" ng-init="dataItem.checkAll=true" type="checkbox" ng-change="$ctrl.checkAllResultClick(dataItem)"></input>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="searchSelectedHeaderTemplate">
+    <div>
+        <input ng-model="dataItem.checkAll" ng-if="$ctrl.searchSelectedAll==false" type="checkbox" ng-change="$ctrl.checkAllSelectedResultClick(dataItem)"></input>
+        <input ng-model="dataItem.checkAll" ng-if="$ctrl.searchSelectedAll==true" ng-init="dataItem.checkAll=true" type="checkbox"
+            ng-change="$ctrl.checkAllSelectedResultClick(dataItem)"></input>
+    </div>
+</script>
+<div>
+    <div kendo-tab-strip k-content-urls="[ null, null]">
+        <ul>
+            <li>
+                <label> Results ({{$ctrl.resultStudyHaGridCount}}) </label>
+            </li>
+            <li class="k-state-active">
+                <label> Selected ({{$ctrl.resultSelectedStudyHaGridCount}})</label>
+            </li>
+        </ul>
+        <div style="padding: 1em">
+            <div kendo-DVDataGrid="$ctrl.resultStudyHaGrid" id="resultStudyHaGrid" k-options="$ctrl.resultStudyHaGridOptions" class="grid-table"></div>
+        </div>
+        <div style="padding: 1em">
+            <div kendo-DVDataGrid="$ctrl.resultSelectedStudyHaGrid" id="resultSelectedStudyHaGrid" k-options="$ctrl.resultSelectedStudyHaGridOptions"
+                class="grid-table"></div>
+        </div>
+    </div>
+</div>
