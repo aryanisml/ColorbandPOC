@@ -1,3 +1,5 @@
+kendoGridExtended.js
+
 (function ($) {
 
     var MyGrid = kendo.ui.Grid.extend({
